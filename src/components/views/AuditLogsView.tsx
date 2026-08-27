@@ -49,4 +49,37 @@ export function AuditLogsView({ logs }: AuditLogsViewProps) {
             <div className="p-12 text-center text-[var(--color-text-ghost)] text-sm">
               No system logs available.
             </div>
-          ) : (\n            <div className=\"flex flex-col divide-y divide-[var(--color-border-subtle)]\">\n              {logs.map((log) => (\n                <div key={log.id} className=\"grid grid-cols-6 gap-4 px-8 py-4 hover:bg-[var(--color-bg-raised)] transition-colors duration-200 items-center\">\n                  <span className=\"font-mono text-[12px] text-[var(--color-text-ghost)]\">\n                    {formatDateTime(log.created_at)}\n                  </span>\n                  <span className={`text-[11px] font-bold tracking-wider ${\n                    log.type === 'ENTRY' ? 'text-[var(--color-status-success)]' : \n                    log.type === 'EXIT' ? 'text-[var(--color-status-warning)]' : \n                    'text-[var(--color-accent)]'\n                  }`}>\n                    {log.type}\n                  </span>\n                  <span className=\"text-sm col-span-2 truncate\">{log.details}</span>\n                  <span className=\"font-mono text-[12px] text-[var(--color-text-ghost)]\">{log.ref_id || '-'}</span>\n                  <div className=\"flex justify-center\">\n                    <span className={`text-[10px] font-bold uppercase tracking-wider ${\n                      log.status === 'SUCCESS' ? 'text-[var(--color-status-success)]' : \n                      log.status === 'ERROR' ? 'text-[var(--color-status-error)]' : \n                      'text-[var(--color-status-warning)]'\n                    }`}>\n                      {log.status}\n                    </span>\n                  </div>\n                </div>\n              ))}\n            </div>\n          )}\n        </div>\n      </div>\n    </div>\n  );\n}\n
+          ) : (
+            <div className="flex flex-col divide-y divide-[var(--color-border-subtle)]">
+              {logs.map((log) => (
+                <div key={log.id} className="grid grid-cols-6 gap-4 px-8 py-4 hover:bg-[var(--color-bg-raised)] transition-colors duration-200 items-center">
+                  <span className="font-mono text-[12px] text-[var(--color-text-ghost)]">
+                    {formatDateTime(log.created_at)}
+                  </span>
+                  <span className={`text-[11px] font-bold tracking-wider ${
+                    log.type === 'ENTRY' ? 'text-[var(--color-status-success)]' : 
+                    log.type === 'EXIT' ? 'text-[var(--color-status-warning)]' : 
+                    'text-[var(--color-accent)]'
+                  }`}>
+                    {log.type}
+                  </span>
+                  <span className="text-sm col-span-2 truncate">{log.details}</span>
+                  <span className="font-mono text-[12px] text-[var(--color-text-ghost)]">{log.ref_id || '-'}</span>
+                  <div className="flex justify-center">
+                    <span className={`text-[10px] font-bold uppercase tracking-wider ${
+                      log.status === 'SUCCESS' ? 'text-[var(--color-status-success)]' : 
+                      log.status === 'ERROR' ? 'text-[var(--color-status-error)]' : 
+                      'text-[var(--color-status-warning)]'
+                    }`}>
+                      {log.status}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}

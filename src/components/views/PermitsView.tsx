@@ -113,4 +113,25 @@ export function PermitsView({
                   <StatusBadge status={permit.status} />
                 </div>
                 <div className="lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
-                  {(permit.status === 'active' || permit.status === 'overstay') && permit.entryStatus === 'in' && (\n                    <button \n                      onClick={() => onCheckOut(permit.id)}\n                      className=\"text-[10px] font-bold uppercase tracking-[0.08em] text-[var(--color-status-warning)] hover:text-[var(--color-text-primary)] transition-colors mt-2 lg:mt-0\"\n                    >\n                      CHECK OUT\n                    </button>\n                  )}\n                </div>\n              </div>\n            </div>\n          ))}\n          {filteredPermits.length === 0 && (\n            <div className=\"p-12 text-center text-[var(--color-text-ghost)] text-sm\">\n              No permits found matching criteria.\n            </div>\n          )}\n        </div>\n      </div>\n    </div>\n  );\n}\n
+                  {(permit.status === 'active' || permit.status === 'overstay') && permit.entryStatus === 'in' && (
+                    <button 
+                      onClick={() => onCheckOut(permit.id)}
+                      className="text-[10px] font-bold uppercase tracking-[0.08em] text-[var(--color-status-warning)] hover:text-[var(--color-text-primary)] transition-colors mt-2 lg:mt-0"
+                    >
+                      CHECK OUT
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+          {filteredPermits.length === 0 && (
+            <div className="p-12 text-center text-[var(--color-text-ghost)] text-sm">
+              No permits found matching criteria.
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}

@@ -122,4 +122,41 @@ export function Sidebar({
           <div className="flex items-center gap-1.5">
             <div className={`w-2 h-2 rounded-full ${useSupabase ? 'bg-[var(--color-status-success)] animate-pulse' : 'bg-[var(--color-status-warning)]'}`} />
             <span className="text-[10px] font-bold font-mono uppercase">
-              {useSupabase ? 'Cloud' : 'Local'}\n            </span>\n          </div>\n        </div>\n        <p className=\"text-[11px] text-[var(--color-text-ghost)]\">\n          {useSupabase ? 'Connected to Supabase DB' : 'Using Local Browser Storage'}\n        </p>\n      </div>\n    </div>\n  );\n\n  return (\n    <>\n      <aside className=\"hidden lg:flex w-72 h-screen border-r border-[var(--color-border-subtle)] bg-[var(--color-bg-card)] sticky top-0 flex-col shrink-0 z-20 transition-colors\">\n        {navContent}\n      </aside>\n\n      {isMobileMenuOpen && (\n        <div className=\"fixed inset-0 z-50 lg:hidden flex\">\n          <div \n            className=\"fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity\"\n            onClick={() => setIsMobileMenuOpen(false)}\n          />\n          <div className=\"relative w-72 max-w-[80vw] h-full bg-[var(--color-bg-card)] shadow-2xl z-10 flex flex-col\">\n            <button \n              onClick={() => setIsMobileMenuOpen(false)}\n              className=\"absolute top-4 right-4 p-2 rounded-lg bg-[var(--color-bg-raised)] text-[var(--color-text-ghost)] hover:text-[var(--color-text-primary)]\"\n              aria-label=\"Close menu\"\n            >\n              <X size={18} />\n            </button>\n            {navContent}\n          </div>\n        </div>\n      )}\n    </>\n  );\n}\n
+              {useSupabase ? 'Cloud' : 'Local'}
+            </span>
+          </div>
+        </div>
+        <p className="text-[11px] text-[var(--color-text-ghost)]">
+          {useSupabase ? 'Connected to Supabase DB' : 'Using Local Browser Storage'}
+        </p>
+      </div>
+    </div>
+  );
+
+  return (
+    <>
+      <aside className="hidden lg:flex w-72 h-screen border-r border-[var(--color-border-subtle)] bg-[var(--color-bg-card)] sticky top-0 flex-col shrink-0 z-20 transition-colors">
+        {navContent}
+      </aside>
+
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-50 lg:hidden flex">
+          <div 
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+          <div className="relative w-72 max-w-[80vw] h-full bg-[var(--color-bg-card)] shadow-2xl z-10 flex flex-col">
+            <button 
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="absolute top-4 right-4 p-2 rounded-lg bg-[var(--color-bg-raised)] text-[var(--color-text-ghost)] hover:text-[var(--color-text-primary)]"
+              aria-label="Close menu"
+            >
+              <X size={18} />
+            </button>
+            {navContent}
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
