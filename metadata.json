@@ -1,0 +1,7 @@
+{
+  "name": "PASSMARK: Access Control System ",
+  "description": "A minimalist digital parking management system with QR-code access control.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
