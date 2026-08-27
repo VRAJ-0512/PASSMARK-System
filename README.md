@@ -6,6 +6,33 @@ PASSMARK streamlines gate security, visitor pre-registration, and real-time park
 
 ---
 
+## Preview
+
+<table>
+  <tr>
+    <td width="50%" align="center">
+      <img src="screenshots/admin-dashboard.png" alt="Admin Dashboard" /><br />
+      <sub><b>Admin Dashboard</b> — live occupancy, traffic analysis, and zone monitoring</sub>
+    </td>
+    <td width="50%" align="center">
+      <img src="screenshots/gate-terminal.png" alt="Gate Terminal" /><br />
+      <sub><b>Gate Terminal</b> — QR scanner for check-in/check-out</sub>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center">
+      <img src="screenshots/resident-portal.png" alt="Resident Portal" /><br />
+      <sub><b>Resident Portal</b> — fast-track passes and guest management</sub>
+    </td>
+    <td width="50%" align="center">
+      <img src="screenshots/new-guest-pass.png" alt="Guest Pass Generation" /><br />
+      <sub><b>Guest Pass Generation</b> — create time-bound QR passes</sub>
+    </td>
+  </tr>
+</table>
+
+---
+
 ## Key Features
 
 ### 🏢 Resident Portal
@@ -102,23 +129,23 @@ PASSMARK streamlines gate security, visitor pre-registration, and real-time park
 PASSMARK SYSTEM/
 ├── public/                 # Static assets & PWA manifest icons
 ├── src/
-├── components/         # Presentation & UI components
-│   ├── common/         # Reusable primitives (Brand, StatCard, StatusBadge)
-│   ├── layout/         # Header and Sidebar navigation
-│   ├── modals/         # New Permit and QR Display modals
-│   ├── scanner/        # Camera QR scanner wrapper
-│   └── views/          # Primary views (Dashboard, Gate, Permits, Resident, etc.)
-├── hooks/              # Custom hooks (useAuth, usePassmarkData, useTheme)
-├── lib/                # Supabase client singleton & configuration
-├── types/              # TypeScript interfaces and declarations
-├── utils/              # Helper utilities (date formatting, CSV export)
-├── App.tsx             # Root application coordinator
-├── index.css           # Design tokens, theme variables & animations
-└── main.tsx            # React application entry point
+│   ├── components/         # Presentation & UI components
+│   │   ├── common/         # Reusable primitives (Brand, StatCard, StatusBadge)
+│   │   ├── layout/         # Header and Sidebar navigation
+│   │   ├── modals/         # New Permit and QR Display modals
+│   │   ├── scanner/        # Camera QR scanner wrapper
+│   │   └── views/          # Primary views (Dashboard, Gate, Permits, Resident, etc.)
+│   ├── hooks/              # Custom hooks (useAuth, usePassmarkData, useTheme)
+│   ├── lib/                # Supabase client singleton & configuration
+│   ├── types/              # TypeScript interfaces and declarations
+│   ├── utils/              # Helper utilities (date formatting, CSV export)
+│   ├── App.tsx             # Root application coordinator
+│   ├── index.css           # Design tokens, theme variables & animations
+│   └── main.tsx            # React application entry point
 ├── supabase/
-│   └── schema.sql      # Database schema, RLS policies, and triggers
-├── .env.example        # Environment variables template
-├── .gitignore          # Git ignore rules
-├── package.json        # Dependencies and build scripts
-└── vite.config.ts      # Vite build and PWA configuration
+│   └── schema.sql          # Database schema, RLS policies, and triggers
+├── .env.example            # Environment variables template
+├── .gitignore              # Git ignore rules
+├── package.json            # Dependencies and build scripts
+└── vite.config.ts          # Vite build and PWA configuration
 ```
