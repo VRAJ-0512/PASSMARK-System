@@ -55,7 +55,7 @@ PASSMARK streamlines gate security, visitor pre-registration, and real-time park
 
 1. **Clone the repository**:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/VRAJ-0512/PASSMARK-System.git
    cd "PASSMARK SYSTEM"
    ```
 
@@ -102,23 +102,23 @@ PASSMARK streamlines gate security, visitor pre-registration, and real-time park
 PASSMARK SYSTEM/
 ├── public/                 # Static assets & PWA manifest icons
 ├── src/
-│   ├── components/         # Presentation & UI components
-│   │   ├── common/         # Reusable primitives (Brand, StatCard, StatusBadge)
-│   │   ├── layout/         # Header and Sidebar navigation
-│   │   ├── modals/         # New Permit and QR Display modals
-│   │   ├── scanner/        # Camera QR scanner wrapper
-│   │   └── views/          # Primary views (Dashboard, Gate, Permits, Resident, etc.)
-│   ├── hooks/              # Custom hooks (useAuth, usePassmarkData, useTheme)
-│   ├── lib/                # Supabase client singleton & configuration
-│   ├── types/              # TypeScript interfaces and declarations
-│   ├── utils/              # Helper utilities (date formatting, CSV export)
-│   ├── App.tsx             # Root application coordinator
-│   ├── index.css           # Design tokens, theme variables & animations
-│   └── main.tsx            # React application entry point
+├── components/         # Presentation & UI components
+│   ├── common/         # Reusable primitives (Brand, StatCard, StatusBadge)
+│   ├── layout/         # Header and Sidebar navigation
+│   ├── modals/         # New Permit and QR Display modals
+│   ├── scanner/        # Camera QR scanner wrapper
+│   └── views/          # Primary views (Dashboard, Gate, Permits, Resident, etc.)
+├── hooks/              # Custom hooks (useAuth, usePassmarkData, useTheme)
+├── lib/                # Supabase client singleton & configuration
+├── types/              # TypeScript interfaces and declarations
+├── utils/              # Helper utilities (date formatting, CSV export)
+├── App.tsx             # Root application coordinator
+├── index.css           # Design tokens, theme variables & animations
+└── main.tsx            # React application entry point
 ├── supabase/
-│   └── schema.sql          # Database schema, RLS policies, and triggers
-├── .env.example            # Environment variables template
-├── .gitignore              # Git ignore rules
-├── package.json            # Dependencies and build scripts
-└── vite.config.ts          # Vite build and PWA configuration
+│   └── schema.sql      # Database schema, RLS policies, and triggers
+├── .env.example        # Environment variables template
+├── .gitignore          # Git ignore rules
+├── package.json        # Dependencies and build scripts
+└── vite.config.ts      # Vite build and PWA configuration
 ```
