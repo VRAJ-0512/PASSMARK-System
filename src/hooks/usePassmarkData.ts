@@ -83,56 +83,70 @@ export function usePassmarkData(session: Session | null, setUserProfile: (profil
 
     const fetchData = async () => {
       try {
-        const timeoutPromise = new Promise((_, reject) =>
-          setTimeout(() => reject(new Error('Connection timeout')), 10000)
-        );
-
-        const fetchPromise = Promise.all([
+        const fetchPromise = Promise.allSettled([
           supabase.from('permits').select('*').order('entryTime', { ascending: false }),
           supabase.from('slots').select('*').order('id', { ascending: true }),
           supabase.from('logs').select('*').order('created_at', { ascending: false }),
-          supabase.from('profiles').select('*').eq('id', session.user.id).single()
+          supabase.from('profiles').select('*').eq('id', session.user.id).maybeSingle()
         ]);
 
-        const [permitsRes, slotsRes, logsRes, profileRes] = await Promise.race([fetchPromise, timeoutPromise]) as any;
+        const timeoutPromise = new Promise<'TIMEOUT'>((resolve) =>
+          setTimeout(() => resolve('TIMEOUT'), 15000)
+        );
 
-        let hasMissingTables = false;
+        const raceResult = await Promise.race([fetchPromise, timeoutPromise]);
 
-        if (profileRes && profileRes.data) {
-          setUserProfile(profileRes.data);
-        } else if (profileRes && profileRes.error) {
-          console.error('Supabase profile error:', profileRes.error);
-          if (profileRes.error.code === '42P01' || profileRes.error.code === 'PGRST205') hasMissingTables = true;
+        if (raceResult === 'TIMEOUT') {
+          console.warn('Supabase fetch timed out; using local cached data as fallback');
+          const savedPermits = localStorage.getItem('pm_permits');
+          if (savedPermits) setPermits(JSON.parse(savedPermits));
+          const savedSlots = localStorage.getItem('pm_slots');
+          if (savedSlots) setSlots(JSON.parse(savedSlots));
+          return;
         }
 
-        if (permitsRes.error) {
-          console.error('Supabase permits error:', permitsRes.error);
-          if (permitsRes.error.code === '42P01' || permitsRes.error.code === 'PGRST205') hasMissingTables = true;
-        }
-        if (slotsRes.error) {
-          console.error('Supabase slots error:', slotsRes.error);
-          if (slotsRes.error.code === '42P01' || slotsRes.error.code === 'PGRST205') hasMissingTables = true;
-        }
-        if (logsRes.error) {
-          console.error('Supabase logs error:', logsRes.error);
-          if (logsRes.error.code === '42P01' || logsRes.error.code === 'PGRST205') hasMissingTables = true;
-        }
+        const [permitsRes, slotsRes, logsRes, profileRes] = raceResult;
 
-        if (hasMissingTables) {
-          toast.error('Database tables are missing!', {
-            description: 'Please run the updated SQL script in the Supabase SQL Editor.',
-            duration: 10000
+        if (profileRes.status === 'fulfilled' && profileRes.value.data) {
+          setUserProfile(profileRes.value.data as UserProfile);
+        } else if (session.user) {
+          const email = session.user.email || 'user@passmark.sys';
+          const role = (session.user.user_metadata?.role as 'admin' | 'user') ||
+            (email.includes('operator') || email.includes('admin') ? 'admin' : 'user');
+          setUserProfile({
+            id: session.user.id,
+            email,
+            role
           });
         }
 
-        if (permitsRes.data) setPermits(permitsRes.data as VisitorPermit[]);
-        if (slotsRes.data && slotsRes.data.length > 0) setSlots(slotsRes.data as ParkingSlot[]);
-        if (logsRes.data) setLogs(logsRes.data as SystemLog[]);
+        if (permitsRes.status === 'fulfilled' && permitsRes.value.data && permitsRes.value.data.length > 0) {
+          setPermits(permitsRes.value.data as VisitorPermit[]);
+        } else {
+          const savedPermits = localStorage.getItem('pm_permits');
+          if (savedPermits) setPermits(JSON.parse(savedPermits));
+        }
+
+        if (slotsRes.status === 'fulfilled' && slotsRes.value.data && slotsRes.value.data.length > 0) {
+          setSlots(slotsRes.value.data as ParkingSlot[]);
+        } else {
+          const savedSlots = localStorage.getItem('pm_slots');
+          if (savedSlots) {
+            setSlots(JSON.parse(savedSlots));
+          } else {
+            setSlots(INITIAL_SLOTS);
+          }
+        }
+
+        if (logsRes.status === 'fulfilled' && logsRes.value.data) {
+          setLogs(logsRes.value.data as SystemLog[]);
+        }
       } catch (error: any) {
         console.error('Error fetching data from Supabase:', error);
-        toast.error(`Failed to load data: ${error.message || 'Unknown error'}. Falling back to local storage.`);
-        console.warn('Falling back to local storage mode.');
-        setUseSupabase(false);
+        const savedPermits = localStorage.getItem('pm_permits');
+        if (savedPermits) setPermits(JSON.parse(savedPermits));
+        const savedSlots = localStorage.getItem('pm_slots');
+        if (savedSlots) setSlots(JSON.parse(savedSlots));
       } finally {
         setIsLoading(false);
       }

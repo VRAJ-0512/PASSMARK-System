@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { UserProfile, ViewMode, ThemeMode } from '../../types';
 import { LogoIcon, LogoText } from '../common/Brand';
+import { isSupabaseConfigured } from '../../lib/supabase';
 
 interface HeaderProps {
   viewMode: ViewMode;
@@ -64,7 +65,7 @@ export function Header({
       </div>
 
       <div className="flex items-center gap-2 sm:gap-4">
-        {userProfile?.role === 'admin' && (
+        {(userProfile?.role === 'admin' || (!userProfile && viewMode === 'admin')) && (
           <div className="flex bg-[var(--color-bg-raised)] p-1 rounded-xl border border-[var(--color-border-subtle)]">
             <button
               onClick={onSwitchToAdmin}
@@ -110,14 +111,14 @@ export function Header({
           {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
         </button>
 
-        {userProfile && (
+        {(userProfile || isSupabaseConfigured) && (
           <div className="flex items-center gap-2 pl-2 border-l border-[var(--color-border-subtle)]">
             <div className="hidden md:flex flex-col text-right">
               <span className="text-xs font-bold text-[var(--color-text-primary)] truncate max-w-[140px]">
-                {userProfile.email.split('@')[0]}
+                {(userProfile?.email || 'User').split('@')[0]}
               </span>
               <span className="text-[10px] uppercase font-mono text-[var(--color-text-ghost)]">
-                {userProfile.role}
+                {userProfile?.role || (viewMode === 'admin' ? 'admin' : 'resident')}
               </span>
             </div>
             <div className="w-8 h-8 rounded-full bg-[var(--color-bg-raised)] border border-[var(--color-border-subtle)] flex items-center justify-center text-[var(--color-text-ghost)]">
@@ -125,8 +126,9 @@ export function Header({
             </div>
             <button
               onClick={onLogout}
-              className="p-2 rounded-full hover:bg-[var(--color-bg-raised)] text-[var(--color-text-ghost)] hover:text-[var(--color-status-error)] transition-colors"
+              className="p-2 rounded-full hover:bg-[var(--color-bg-raised)] text-[var(--color-text-ghost)] hover:text-[var(--color-status-error)] transition-colors cursor-pointer"
               title="Sign Out"
+              aria-label="Sign Out"
             >
               <LogOut size={16} />
             </button>
