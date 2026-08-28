@@ -1,3 +1,5 @@
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black) ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white) ![Vite](https://img.shields.io/badge/Vite-6-646CFF?logo=vite&logoColor=white) ![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)
+
 # PASSMARK
 
 > A modern, minimalist digital parking management and QR access control system designed for gated residential communities and commercial facilities.
@@ -149,3 +151,9 @@ PASSMARK SYSTEM/
 ├── package.json            # Dependencies and build scripts
 └── vite.config.ts          # Vite build and PWA configuration
 ```
+
+---
+
+## Author
+
+Built by Vraj Mistry — [GitHub profile](https://github.com/VRAJ-0512)
