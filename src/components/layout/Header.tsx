@@ -11,6 +11,7 @@ import {
   User 
 } from 'lucide-react';
 import { UserProfile, ViewMode, ThemeMode } from '../../types';
+import { LogoIcon, LogoText } from '../common/Brand';
 
 interface HeaderProps {
   viewMode: ViewMode;
@@ -41,7 +42,7 @@ export function Header({
   return (
     <header className="h-16 lg:h-20 border-b border-[var(--color-border-subtle)] flex items-center justify-between px-4 lg:px-10 bg-[var(--color-bg-page)]/80 backdrop-blur-md sticky top-0 z-10 transition-colors">
       <div className="flex items-center gap-3">
-        {viewMode === 'admin' && (
+        {viewMode === 'admin' ? (
           <button 
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
             className="lg:hidden p-2 rounded-xl bg-[var(--color-bg-raised)] text-[var(--color-text-ghost)] hover:text-[var(--color-text-primary)] transition-colors border border-[var(--color-border-subtle)]"
@@ -49,6 +50,16 @@ export function Header({
           >
             {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
+        ) : (
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-[var(--color-text-primary)] text-[var(--color-bg-page)] rounded-xl flex items-center justify-center shadow-md">
+              <LogoIcon className="w-6 h-6" />
+            </div>
+            <div>
+              <LogoText className="text-xl" />
+              <p className="text-[9px] uppercase tracking-widest font-mono text-[var(--color-text-ghost)]">Access Control</p>
+            </div>
+          </div>
         )}
       </div>
 
